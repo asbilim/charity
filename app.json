@@ -4,7 +4,7 @@
     "web": {
       "bundler": "metro"
     },
-    "name": "charity",
-    "slug": "charity"
+    "name": "charitEase",
+    "slug": "charitEase"
   }
 }

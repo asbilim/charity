@@ -1,5 +1,5 @@
 const COLORS = {
-    // Success color.
+  // Success color.
   success: "#32CD32",
 
   // Error color.
@@ -15,17 +15,14 @@ const COLORS = {
   secondary: "#A959C6",
 
   //color for texts.
-  textColor:"#394452",
+  textColor: "#394452",
 
   //colors for button numbers.
-  gray:"#D9D9D9",
+  gray: "#D9D9D9",
 
   //black color.
 
-  black:"#000"
+  black: "#000",
+};
 
-
-
-
-  
-}
+export { COLORS };
