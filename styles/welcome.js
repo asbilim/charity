@@ -1,13 +1,14 @@
-import { FONT,SIZES,COLORS,BORDER_RADIUS,SPACING,ELEVATION } from "../constants";
+import { COLORS } from "../constants/colors";
+import { SIZES } from "../constants/sizes";
+import { FONTS } from "../constants/fonts";
 import { StyleSheet } from "react-native";
 
-const cardStyles = StyleSheet.create({
+const welcomeStyles = StyleSheet.create({
     container: {
       backgroundColor: COLORS.black,
       borderRadius: BORDER_RADIUS.medium,
       padding: SPACING.medium,
       marginBottom: SPACING.medium,
-      ...ELEVATION.medium,
     },
     title: {
       fontFamily: FONT.medium,
@@ -28,92 +29,6 @@ const cardStyles = StyleSheet.create({
     },
 });
 
-const modalStyles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: COLORS.transparent,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    modalContainer: {
-      backgroundColor: COLORS.black,
-      borderRadius: BORDER_RADIUS.medium,
-      padding: SPACING.medium,
-      ...ELEVATION.medium,
-    },
-    title: {
-      fontFamily: FONT.bold,
-      fontSize: SIZES.large,
-      color: COLORS.primary,
-      marginBottom: SPACING.medium,
-      textAlign: 'center',
-    },
-    message: {
-      fontFamily: FONT.regular,
-      fontSize: SIZES.medium,
-      color: COLORS.black,
-      marginBottom: SPACING.medium,
-      textAlign: 'center',
-    },
-    buttonContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      marginTop: SPACING.medium,
-    },
-    button: {
-      backgroundColor: COLORS.primary,
-      borderRadius: BORDER_RADIUS.medium,
-      paddingHorizontal: SPACING.medium,
-      paddingVertical: SPACING.small,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    buttonText: {
-      fontFamily: FONT.medium,
-      fontSize: SIZES.medium,
-      color: COLORS.black,
-    },
-});
-
-const headerStyles = StyleSheet.create({
-    container: {
-      backgroundColor: COLORS.primary,
-      flexDirection: 'row',
-      alignItems: 'center',
-      height: 60,
-     paddingHorizontal: SPACING.medium,
-      justifyContent: 'space-between',
-    },
-    logo: {
-      width: 30,
-      height: 30,
-    },
-    title: {
-      fontFamily: FONT.bold,
-      fontSize: SIZES.medium,
-      color: COLORS.black,
-    },
-});
-
-const titleStyles = StyleSheet.create({
-    container: {
-      paddingHorizontal: SPACING.medium,
-      paddingVertical: SPACING.small,
-      backgroundColor: COLORS.primary,
-      borderRadius: BORDER_RADIUS.medium,
-      marginBottom: SPACING.medium,
-      ...ELEVATION.medium,
-    },
-    text: {
-      fontFamily: FONT.bold,
-      fontSize: SIZES.medium,
-      color: COLORS.black,
-    },
-});
-
 export {
-    cardStyles,
-    modalStyles,
-    headerStyles,
-    titleStyles,
+    welcomeStyles
 }

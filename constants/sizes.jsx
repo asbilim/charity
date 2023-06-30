@@ -25,6 +25,6 @@ const SIZES = {
 
 };
 
-export default {
+export {
     SIZES
 }
