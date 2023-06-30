@@ -18,7 +18,7 @@ export default function Index(){
                     },
                     headerTitle:()=>{
                         return <Text>charity</Text>
-                    }
+                    },
                 }}
             />
 
