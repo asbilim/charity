@@ -1,36 +1,47 @@
+import { Stack, useRouter } from "expo-router";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native";
+import { FONTS } from "../constants/fonts";
+import { welcome } from "../constants/image";
+import { welcomeStyles } from "../styles/welcome";
+import { useEffect } from "react";
 
-import { Stack } from "expo-router"
-import { Text } from "react-native"
-import { SafeAreaView } from "react-native"
-import fonts from "../constants/fonts"
-import { useRouter } from "expo-router"
-import { useEffect } from "react"
+export default function Index() {
+  const router = useRouter();
 
+  useEffect(() => {
+    setTimeout(() => {
+      router.push("/(auth)/login");
+    }, 1000);
+  }, []);
 
-export default function Index(){
-
-    const router = useRouter()
-    useEffect(()=>router.replace("/(account)/interest/"),[router])
-    
-    return (
-        <SafeAreaView
-            style={{fontFamily:fonts.FONTS.regular}}
-        >
-
-            <Stack
-                screenOptions={{
-                    headerLeft:()=>{
-                        return(
-                            <Text>hello</Text>
-                        )
-                    },
-                    headerTitle:()=>{
-                        return <Text>charity</Text>
-                    },
-                }}
-            />
-
-            <Text style={{fontFamily:fonts.FONTS.regular, fontSize:18}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum nam voluptate pariatur quas magni voluptatem, voluptatibus nostrum laudantium reiciendis tempora, molestias odio. Numquam nulla sequi ex explicabo? Explicabo, minima aut?</Text>
-        </SafeAreaView>
-    )
+  return (
+    <SafeAreaView
+      style={[welcomeStyles.container, { fontFamily: FONTS.regular }]}
+    >
+      <View style={welcomeStyles.welcomeImage}>
+        <Image
+          source={welcome}
+          style={{ width: 250, height: 250, resizeMode: "contain" }}
+        />
+      </View>
+      <View style={[welcomeStyles.welcomeText]}>
+        <View style={welcomeStyles.welcomeTextBar}></View>
+        <Text style={welcomeStyles.welcomeText1}>
+          Donate What you have with ease
+        </Text>
+        <Text style={welcomeStyles.welcomeText2}>
+          Discover the helpless ones and bring then your support
+        </Text>
+        <View style={welcomeStyles.welcomeTextButtons}>
+          <TouchableOpacity style={welcomeStyles.welcomeTextButtonRegister}>
+            <Text style={welcomeStyles.welcomeText3}>Register</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={welcomeStyles.welcomeTextButtonsLogin}>
+            <Text style={welcomeStyles.welcomeText3}>Login</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </SafeAreaView>
+  );
 }

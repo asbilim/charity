@@ -7,6 +7,6 @@ const FONTS = {
     regular:"Boska-regular",
 }
 
-export default {
+export {
     FONTS
 }
