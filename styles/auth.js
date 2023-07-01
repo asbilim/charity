@@ -1,8 +1,8 @@
-import { SIZES, SPACING, ELEVATION, BORDER_RADIUS } from "../constants/sizes";
-import { FONTS } from "../constants/fonts";
+import sizes from "../constants/sizes";
+import fonts from "../constants/fonts";
 import { StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
-import { COLORS } from "../constants/colors";
+import colors from "../constants/colors";
 
 const { width, height } = Dimensions.get("window");
 
@@ -13,12 +13,12 @@ const loginStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     // height: height / 1.1,
-    marginTop: SPACING.large,
-    marginBottom: SPACING.large,
+    marginTop: sizes.SPACING.large,
+    marginBottom: sizes.SPACING.large,
     flex: 1,
   },
   loginOrBarContainer: {
-    marginTop: SPACING.large,
+    marginTop: sizes.SPACING.large,
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
@@ -27,8 +27,8 @@ const loginStyles = StyleSheet.create({
     alignItems: "center",
     height: 2,
     width: width / 3,
-    backgroundColor: COLORS.textColor,
-    borderRadius: BORDER_RADIUS.large,
+    backgroundColor: colors.COLORS.textColor,
+    borderRadius: sizes.BORDER_RADIUS.large,
   },
 });
 

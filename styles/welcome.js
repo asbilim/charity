@@ -1,6 +1,6 @@
-import { COLORS } from "../constants/colors";
-import { SIZES, SPACING, ELEVATION, BORDER_RADIUS } from "../constants/sizes";
-import { FONTS } from "../constants/fonts";
+import colors from "../constants/colors";
+import sizes from "../constants/sizes";
+import fonts from "../constants/fonts";
 import { StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
 
@@ -11,8 +11,8 @@ const welcomeStyles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "column",
     alignItems: "center",
-    borderRadius: BORDER_RADIUS.medium,
-    marginTop: SPACING.large,
+    borderRadius: sizes.BORDER_RADIUS.medium,
+    marginTop: sizes.SPACING.large,
   },
   welcomeImage: {
     display: "flex",
@@ -20,8 +20,8 @@ const welcomeStyles = StyleSheet.create({
     alignItems: "center",
     width: width - 10,
     height: height / 2.2,
-    backgroundColor: COLORS.primary,
-    borderRadius: BORDER_RADIUS.large,
+    backgroundColor: colors.COLORS.primary,
+    borderRadius: sizes.BORDER_RADIUS.large,
   },
   welcomeText: {
     display: "flex",
@@ -31,14 +31,14 @@ const welcomeStyles = StyleSheet.create({
     width: width - 10,
     height: height / 2,
     margin: 0,
-    marginTop: SPACING.large,
-    borderColor: COLORS.gray,
+    marginTop: sizes.SPACING.large,
+    borderColor: colors.COLORS.gray,
     borderWidth: 1,
     borderBottomWidth: 0,
-    borderTopLeftRadius: BORDER_RADIUS.large,
-    borderTopRightRadius: BORDER_RADIUS.large,
-    padding: SPACING.medium,
-    backgroundColor: COLORS.white,
+    borderTopLeftRadius: sizes.BORDER_RADIUS.large,
+    borderTopRightRadius: sizes.BORDER_RADIUS.large,
+    padding: sizes.SPACING.medium,
+    backgroundColor: colors.COLORS.white,
     position: "relative",
   },
 
@@ -48,34 +48,34 @@ const welcomeStyles = StyleSheet.create({
     alignItems: "center",
     height: 2,
     width: width / 4,
-    backgroundColor: COLORS.gray,
-    borderRadius: BORDER_RADIUS.large,
+    backgroundColor: colors.COLORS.gray,
+    borderRadius: sizes.BORDER_RADIUS.large,
   },
 
   welcomeText1: {
-    fontFamily: FONTS.bold,
-    fontSize: SIZES.xLarge,
-    color: COLORS.textColor,
+    fontFamily: fonts.FONTS.bold,
+    fontSize: sizes.SIZES.xLarge,
+    color: colors.COLORS.textColor,
     textAlign: "center",
-    marginBottom: SPACING.xLarge,
+    marginBottom: sizes.SPACING.xLarge,
   },
   welcomeText2: {
-    fontFamily: FONTS.regular,
-    fontSize: SIZES.small,
-    color: COLORS.textColor,
+    fontFamily: fonts.FONTS.regular,
+    fontSize: sizes.SIZES.small,
+    color: colors.COLORS.textColor,
     textAlign: "center",
-    marginBottom: SPACING.xLarge,
+    marginBottom: sizes.SPACING.xLarge,
   },
 
   welcomeText3: {
-    fontFamily: FONTS.regular,
-    fontSize: SIZES.medium,
-    color: COLORS.textColor,
+    fontFamily: fonts.FONTS.regular,
+    fontSize: sizes.SIZES.medium,
+    color: colors.COLORS.textColor,
   },
 
   welcomeTextButtons: {
-    borderRadius: BORDER_RADIUS.medium,
-    backgroundColor: COLORS.secondary,
+    borderRadius: sizes.BORDER_RADIUS.medium,
+    backgroundColor: colors.COLORS.secondary,
     width: width / 1.2,
     height: height / 15,
     display: "flex",
@@ -83,7 +83,7 @@ const welcomeStyles = StyleSheet.create({
   },
 
   welcomeTextButtonRegister: {
-    borderRadius: BORDER_RADIUS.medium,
+    borderRadius: sizes.BORDER_RADIUS.medium,
     backgroundColor: "#ffffff",
     display : "flex",
     justifyContent: "center",
@@ -92,7 +92,7 @@ const welcomeStyles = StyleSheet.create({
     height: height / 15,
   },
   welcomeTextButtonsLogin: {
-    borderRadius: BORDER_RADIUS.medium,
+    borderRadius: sizes.BORDER_RADIUS.medium,
     display : "flex",
     justifyContent: "center",
     alignItems: "center",

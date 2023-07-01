@@ -18,7 +18,6 @@ import { icon } from "../../constants/image";
 import { facebook, google, apple } from "../../constants/icon";
 import Social from "../../components/login/social";
 import { Controller, useForm } from "react-hook-form";
-import { Stack } from "expo-router";
 
 const { width, height } = Dimensions.get("window");
 
@@ -35,13 +34,7 @@ const index = () => {
   return (
     <ScrollView>
       <SafeAreaView style={loginStyles.container}>
-      <Stack 
-            screenOptions={{
-                headerShown: false,
-                statusBarHidden: false
-            }} 
-        />
-        <Text style={welcomeStyles.welcomeText1}>Happy Seeing you Again</Text>
+        <Text style={welcomeStyles.welcomeText1}>Welcome to CharitEase</Text>
 
         <View style={{}}>
           <Image
@@ -53,15 +46,15 @@ const index = () => {
         <Text
           style={[
             welcomeStyles.welcomeText2,
-            { fontSize: sizes.SIZES.large, marginTop: sizes.SPACING.medium },
+            { fontSize: sizes.SIZES.large, marginTop: sizes.SPACING.small },
           ]}
         >
-          Free Login
+          Create Account
         </Text>
 
         <KeyboardAwareScrollView>
           {/* email */}
-          <View style={{ flexDirection: "column", gap: 6 }}>
+          <View style={{ flexDirection: "column", gap: 4 }}>
             <Text style={{ fontSize: 14, fontFamily: fonts.FONTS.regular }}>
               Email
             </Text>
@@ -98,8 +91,14 @@ const index = () => {
             )}
           </View>
 
-           {/* password */}
-           <View style={{ flexDirection: "column", gap: 6, marginTop: sizes.SPACING.medium }}>
+          {/* password */}
+          <View
+            style={{
+              flexDirection: "column",
+              gap: 6,
+              marginTop: sizes.SPACING.small,
+            }}
+          >
             <Text style={{ fontSize: 14, fontFamily: fonts.FONTS.regular }}>
               password
             </Text>
@@ -118,7 +117,7 @@ const index = () => {
                   onBlur={onBlur}
                   onChangeText={(value) => onChange(value)}
                   value={value}
-                  secureTextEntry= {true}
+                  secureTextEntry={true}
                 />
               )}
               name="password"
@@ -136,20 +135,56 @@ const index = () => {
               </Text>
             )}
           </View>
-        </KeyboardAwareScrollView>
 
-        <Text
-          style={[
-            welcomeStyles.welcomeText2,
-            {
-              fontSize: sizes.SIZES.medium,
-              marginTop: sizes.SPACING.medium,
-              color: colors.COLORS.secondary,
-            },
-          ]}
-        >
-          Forgot password
-        </Text>
+          {/* password */}
+          <View
+            style={{
+              flexDirection: "column",
+              gap: 6,
+              marginTop: sizes.SPACING.small,
+            }}
+          >
+            <Text style={{ fontSize: 14, fontFamily: fonts.FONTS.regular }}>
+              Confirm password
+            </Text>
+            <Controller
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={{
+                    borderWidth: 3,
+                    borderColor: colors.COLORS.primary,
+                    width: width - 50,
+                    paddingHorizontal: 15,
+                    paddingVertical: 5,
+                    borderRadius: 12,
+                  }}
+                  onBlur={onBlur}
+                  onChangeText={(value) => onChange(value)}
+                  value={value}
+                  secureTextEntry={true}
+                />
+              )}
+              name="confirmpassword"
+              rules={{
+                // required: "Please confirm your password",
+                validate: (value, { password }) =>
+                  value === password || "Passwords do not match",
+              }}
+              defaultValue=""
+            />
+            {errors.confirmpassword && (
+              <Text
+                style={{
+                  color: COLORS.error,
+                  fontFamily: fonts.FONTS.bold,
+                }}
+              >
+                Passwords don't match!
+              </Text>
+            )}
+          </View>
+        </KeyboardAwareScrollView>
 
         <View style={{ width: width, paddingHorizontal: 25 }}>
           <TouchableOpacity
@@ -159,6 +194,7 @@ const index = () => {
               alignContent: "center",
               justifyContent: "center",
               padding: 12,
+              marginTop: sizes.SPACING.medium
             }}
             onPress={handleSubmit(onSubmit)}
           >
@@ -170,7 +206,7 @@ const index = () => {
                 fontSize: 17,
               }}
             >
-              Login
+              Register
             </Text>
           </TouchableOpacity>
         </View>

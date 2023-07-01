@@ -1,4 +1,4 @@
-import { COLORS } from "./colors";
+import colors from "./colors";
 
 const SIZES = {
   // Extra small size.
@@ -63,7 +63,7 @@ const BORDER_RADIUS = {
 const ELEVATION = {
   // Extra small elevation.
   xSmall: {
-    shadowColor: COLORS.black,
+    shadowColor: colors.COLORS.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -75,7 +75,7 @@ const ELEVATION = {
 
   // Small elevation.
   small: {
-    shadowColor: COLORS.black,
+    shadowColor: colors.COLORS.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -87,7 +87,7 @@ const ELEVATION = {
 
   // Medium elevation.
   medium: {
-    shadowColor: COLORS.black,
+    shadowColor: colors.COLORS.black,
     shadowOffset: {
       width: 0,
       height: 4,
