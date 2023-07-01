@@ -26,3 +26,4 @@ const COLORS = {
 };
 
 export { COLORS };
+

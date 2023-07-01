@@ -8,12 +8,12 @@ SplashScreen.preventAutoHideAsync()
 export default function Layout(){
 
     const [fontsLoaded] = useFonts({
-        'Boska-light':require("../assets/fonts/Ranade-Light.otf"),
-        'Boska-italic':require("../assets/fonts/Ranade-Italic.otf"),
-        'Boska-medium':require("../assets/fonts/Ranade-Medium.otf"),
-        'Boska-bold':require("../assets/fonts/Ranade-Bold.otf"),
-        'Boska-regular':require("../assets/fonts/Ranade-Regular.otf"),
-        'Boska-medium-Italic':require("../assets/fonts/Ranade-MediumItalic.otf"),
+        'Boska-light':require("../../assets/fonts/Ranade-Light.otf"),
+        'Boska-italic':require("../../assets/fonts/Ranade-Italic.otf"),
+        'Boska-medium':require("../../assets/fonts/Ranade-Medium.otf"),
+        'Boska-bold':require("../../assets/fonts/Ranade-Bold.otf"),
+        'Boska-regular':require("../../assets/fonts/Ranade-Regular.otf"),
+        'Boska-medium-Italic':require("../../assets/fonts/Ranade-MediumItalic.otf"),
     })
 
     const onLayoutRootView = useCallback(async () =>{
@@ -30,9 +30,6 @@ export default function Layout(){
 
     return (
         <Stack
-            screenOptions={{
-                headerShown:false
-            }}
         />
     )
 }
