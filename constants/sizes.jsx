@@ -1,5 +1,3 @@
-import { COLORS } from "./colors";
-
 const SIZES = {
   // Extra small size.
   xSmall: 10,
@@ -60,42 +58,5 @@ const BORDER_RADIUS = {
   large: 32,
 };
 
-const ELEVATION = {
-  // Extra small elevation.
-  xSmall: {
-    shadowColor: COLORS.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 2,
-  },
 
-  // Small elevation.
-  small: {
-    shadowColor: COLORS.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 5.84,
-    elevation: 5,
-  },
-
-  // Medium elevation.
-  medium: {
-    shadowColor: COLORS.black,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-    elevation: 10,
-  },
-};
-
-export { SIZES, SPACING, BORDER_RADIUS, ELEVATION };
+export { SIZES, SPACING, BORDER_RADIUS };
