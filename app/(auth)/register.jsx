@@ -46,7 +46,7 @@ const index = () => {
         <Text
           style={[
             welcomeStyles.welcomeText2,
-            { fontSize: sizes.SIZES.large, marginTop: sizes.SPACING.small },
+            { fontSize: SIZES.large, marginTop: SPACING.small },
           ]}
         >
           Create Account
@@ -55,7 +55,7 @@ const index = () => {
         <KeyboardAwareScrollView>
           {/* email */}
           <View style={{ flexDirection: "column", gap: 4 }}>
-            <Text style={{ fontSize: 14, fontFamily: fonts.FONTS.regular }}>
+            <Text style={{ fontSize: 14, fontFamily: FONTS.regular }}>
               Email
             </Text>
             <Controller
@@ -64,7 +64,7 @@ const index = () => {
                 <TextInput
                   style={{
                     borderWidth: 3,
-                    borderColor: colors.COLORS.primary,
+                    borderColor: COLORS.primary,
                     width: width - 50,
                     paddingHorizontal: 15,
                     paddingVertical: 5,
@@ -82,8 +82,8 @@ const index = () => {
             {errors.email && (
               <Text
                 style={{
-                  color: colors.COLORS.error,
-                  fontFamily: fonts.FONTS.bold,
+                  color: COLORS.error,
+                  fontFamily: FONTS.bold,
                 }}
               >
                 This is required.
@@ -96,10 +96,10 @@ const index = () => {
             style={{
               flexDirection: "column",
               gap: 6,
-              marginTop: sizes.SPACING.small,
+              marginTop: SPACING.small,
             }}
           >
-            <Text style={{ fontSize: 14, fontFamily: fonts.FONTS.regular }}>
+            <Text style={{ fontSize: 14, fontFamily: FONTS.regular }}>
               password
             </Text>
             <Controller
@@ -108,7 +108,7 @@ const index = () => {
                 <TextInput
                   style={{
                     borderWidth: 3,
-                    borderColor: colors.COLORS.primary,
+                    borderColor: COLORS.primary,
                     width: width - 50,
                     paddingHorizontal: 15,
                     paddingVertical: 5,
@@ -127,8 +127,8 @@ const index = () => {
             {errors.password && (
               <Text
                 style={{
-                  color: colors.COLORS.error,
-                  fontFamily: fonts.FONTS.bold,
+                  color: COLORS.error,
+                  fontFamily: FONTS.bold,
                 }}
               >
                 This is required.
@@ -141,10 +141,10 @@ const index = () => {
             style={{
               flexDirection: "column",
               gap: 6,
-              marginTop: sizes.SPACING.small,
+              marginTop: SPACING.small,
             }}
           >
-            <Text style={{ fontSize: 14, fontFamily: fonts.FONTS.regular }}>
+            <Text style={{ fontSize: 14, fontFamily: FONTS.regular }}>
               Confirm password
             </Text>
             <Controller
@@ -153,7 +153,7 @@ const index = () => {
                 <TextInput
                   style={{
                     borderWidth: 3,
-                    borderColor: colors.COLORS.primary,
+                    borderColor: COLORS.primary,
                     width: width - 50,
                     paddingHorizontal: 15,
                     paddingVertical: 5,
@@ -176,8 +176,8 @@ const index = () => {
             {errors.confirmpassword && (
               <Text
                 style={{
-                  color: COLORS.error,
-                  fontFamily: fonts.FONTS.bold,
+                  color: error,
+                  fontFamily: FONTS.bold,
                 }}
               >
                 Passwords don't match!
@@ -189,19 +189,19 @@ const index = () => {
         <View style={{ width: width, paddingHorizontal: 25 }}>
           <TouchableOpacity
             style={{
-              backgroundColor: colors.COLORS.primary,
+              backgroundColor: COLORS.primary,
               borderRadius: 25,
               alignContent: "center",
               justifyContent: "center",
               padding: 12,
-              marginTop: sizes.SPACING.medium
+              marginTop: SPACING.medium
             }}
             onPress={handleSubmit(onSubmit)}
           >
             <Text
               style={{
                 textAlign: "center",
-                fontFamily: fonts.FONTS.medium,
+                fontFamily: FONTS.medium,
                 color: "#fff",
                 fontSize: 17,
               }}
@@ -216,7 +216,7 @@ const index = () => {
           <Text
             style={{
               textAlign: "center",
-              fontFamily: fonts.FONTS.medium,
+              fontFamily: FONTS.medium,
               fontSize: 17,
               marginHorizontal: 10,
             }}
@@ -236,7 +236,7 @@ const index = () => {
           <Text
             style={{
               textAlign: "center",
-              fontFamily: fonts.FONTS.medium,
+              fontFamily: FONTS.medium,
               fontSize: 17,
               marginHorizontal: 10,
             }}
@@ -246,10 +246,10 @@ const index = () => {
           <Text
             style={{
               textAlign: "center",
-              fontFamily: fonts.FONTS.medium,
+              fontFamily: FONTS.medium,
               fontSize: 17,
               marginHorizontal: 10,
-              color: colors.COLORS.primary,
+              color: COLORS.primary,
             }}
           >
             Sing Up

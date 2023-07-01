@@ -61,12 +61,12 @@ export default function FillProfile() {
               <AntDesign
                 name="arrowleft"
                 size={24}
-                color={colors.COLORS.primary}
+                color={COLORS.primary}
               />
             </View>
           ),
           headerTitle: () => (
-            <Text style={{ fontFamily: fonts.FONTS.bold, fontSize: 20 }}>
+            <Text style={{ fontFamily: FONTS.bold, fontSize: 20 }}>
               confirmation code
             </Text>
           ),
@@ -81,7 +81,7 @@ export default function FillProfile() {
             style={{
               fontSize: 16,
               textAlign: "center",
-              fontFamily: fonts.FONTS.regular,
+              fontFamily: FONTS.regular,
             }}
           >
             A code have been seed to your email {"jonhdoe@gmail.com"}
@@ -92,7 +92,7 @@ export default function FillProfile() {
           <Text
             style={{
               fontSize: 24,
-              fontFamily: fonts.FONTS.bold,
+              fontFamily: FONTS.bold,
               textAlign: "center",
             }}
           >
@@ -125,7 +125,7 @@ export default function FillProfile() {
                 <TextInput
                   style={{
                     borderWidth: 3,
-                    borderColor: colors.COLORS.primary,
+                    borderColor: COLORS.primary,
                     width: width - 50,
                     paddingHorizontal: 15,
                     paddingVertical: 8,
@@ -156,7 +156,7 @@ export default function FillProfile() {
             <Text
               style={{
                 textAlign: "center",
-                fontFamily: fonts.FONTS.medium,
+                fontFamily: FONTS.medium,
                 fontSize: 17,
                 marginHorizontal: 10,
               }}
@@ -166,10 +166,10 @@ export default function FillProfile() {
             <Text
               style={{
                 textAlign: "center",
-                fontFamily: fonts.FONTS.medium,
+                fontFamily: FONTS.medium,
                 fontSize: 17,
                 marginHorizontal: 10,
-                color: colors.COLORS.primary,
+                color: COLORS.primary,
               }}
             >
               {countDown}
@@ -180,7 +180,7 @@ export default function FillProfile() {
       <View style={{ width: width, paddingHorizontal: 25 }}>
         <TouchableOpacity
           style={{
-            backgroundColor: colors.COLORS.primary,
+            backgroundColor: COLORS.primary,
             borderRadius: 15,
             alignContent: "center",
             justifyContent: "center",
@@ -191,7 +191,7 @@ export default function FillProfile() {
           <Text
             style={{
               textAlign: "center",
-              fontFamily: fonts.FONTS.medium,
+              fontFamily: FONTS.medium,
               color: "#fff",
               fontSize: 17,
             }}

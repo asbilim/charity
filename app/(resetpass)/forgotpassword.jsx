@@ -37,7 +37,7 @@ const ForgotPassword = () => {
   return (
     <ScrollView>
       <SafeAreaView
-        style={[welcomeStyles.container, { fontFamily: fonts.FONTS.regular }]}
+        style={[welcomeStyles.container, { fontFamily: FONTS.regular }]}
       >
         <Stack.Screen
           options={{
@@ -47,14 +47,14 @@ const ForgotPassword = () => {
                   <AntDesign
                     name="arrowleft"
                     size={24}
-                    color={colors.COLORS.primary}
+                    color={COLORS.primary}
                   />
                 </TouchableOpacity>
               );
             },
             headerTitle: () => {
               return (
-                <Text style={{ fontFamily: fonts.FONTS.bold, fontSize: 20 }}>
+                <Text style={{ fontFamily: FONTS.bold, fontSize: 20 }}>
                   Forgot password
                 </Text>
               );
@@ -80,7 +80,7 @@ const ForgotPassword = () => {
           <KeyboardAwareScrollView>
             {/* email */}
             <View style={{ flexDirection: "column", gap: 4 }}>
-              <Text style={{ fontSize: 14, fontFamily: fonts.FONTS.regular }}>
+              <Text style={{ fontSize: 14, fontFamily: FONTS.regular }}>
                 Email
               </Text>
               <Controller
@@ -89,7 +89,7 @@ const ForgotPassword = () => {
                   <TextInput
                     style={{
                       borderWidth: 3,
-                      borderColor: colors.COLORS.primary,
+                      borderColor: COLORS.primary,
                       width: width - 50,
                       paddingHorizontal: 15,
                       paddingVertical: 5,
@@ -107,8 +107,8 @@ const ForgotPassword = () => {
               {errors.email && (
                 <Text
                   style={{
-                    color: colors.COLORS.error,
-                    fontFamily: fonts.FONTS.bold,
+                    color: COLORS.error,
+                    fontFamily: FONTS.bold,
                   }}
                 >
                   This is required.
@@ -120,19 +120,19 @@ const ForgotPassword = () => {
           <View style={{ width: width, paddingHorizontal: 25 }}>
             <TouchableOpacity
               style={{
-                backgroundColor: colors.COLORS.primary,
+                backgroundColor: COLORS.primary,
                 borderRadius: 15,
                 alignContent: "center",
                 justifyContent: "center",
                 padding: 12,
-                marginBottom: sizes.SPACING.large,
+                marginBottom: SPACING.large,
               }}
               onPress={handleSubmit(onSubmit)}
             >
               <Text
                 style={{
                   textAlign: "center",
-                  fontFamily: fonts.FONTS.medium,
+                  fontFamily: FONTS.medium,
                   color: "#fff",
                   fontSize: 17,
                 }}
