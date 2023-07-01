@@ -11,7 +11,7 @@ export default function Index() {
 
   useEffect(() => {
     setTimeout(() => {
-      router.push("/(auth)/login");
+      router.push("/(account)/interest");
     }, 1000);
   }, []);
 

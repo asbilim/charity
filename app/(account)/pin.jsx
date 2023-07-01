@@ -4,8 +4,8 @@ import { Stack } from "expo-router";
 import { Text, Dimensions, View, TextInput, TouchableOpacity, SafeAreaView } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { AntDesign } from '@expo/vector-icons';
-import fonts from "../../constants/fonts";
-import colors from "../../constants/colors";
+import { FONTS } from '../../constants/fonts';
+import {COLORS} from "../../constants/colors";
 import user from "../../assets/images/kemal.jpg";
 
 export default function FillProfile() {
@@ -19,13 +19,9 @@ export default function FillProfile() {
     return (
         <SafeAreaView style={{ backgroundColor: "#fff", height: height, flexDirection: "column", justifyContent: "space-between", alignItems: "center", paddingBottom: 120, gap: 15 }}>
             <Stack.Screen options={{
-                headerLeft: () => (
-                    <View style={{ marginRight: 21 }}>
-                        <AntDesign name="arrowleft" size={24} color={colors.COLORS.primary} />
-                    </View>
-                ),
+                
                 headerTitle: () => (
-                    <Text style={{ fontFamily: fonts.FONTS.bold, fontSize: 20 }}>
+                    <Text style={{ fontFamily: FONTS.bold, fontSize: 20 }}>
                         Fill your profile
                     </Text>
                 ),
@@ -35,13 +31,13 @@ export default function FillProfile() {
 
             <KeyboardAwareScrollView>
                 <View style={{ paddingVertical: 20 }}>
-                    <Text style={{ fontSize: 16, textAlign: "center", fontFamily: fonts.FONTS.regular }}>
+                    <Text style={{ fontSize: 16, textAlign: "center", fontFamily: FONTS.regular }}>
                         Please remember this PIN because it will be used when you want to top up,withdraw, or donate
                     </Text>
                 </View>
 
                 <View style={{ paddingVertical: 20 }}>
-                    <Text style={{ fontSize: 24, fontFamily: fonts.FONTS.bold,textAlign:"center" }}>
+                    <Text style={{ fontSize: 24, fontFamily: FONTS.bold,textAlign:"center" }}>
                         Create Pin!
                     </Text>
                 </View>
@@ -53,7 +49,7 @@ export default function FillProfile() {
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
                                 <TextInput
-                                    style={{ borderWidth: 3, borderColor: colors.COLORS.primary, width: width - 50, paddingHorizontal: 15, paddingVertical: 8, borderRadius: 12, fontSize: 24, letterSpacing: 15, textAlign: "center" }}
+                                    style={{ borderWidth: 3, borderColor: COLORS.primary, width: width - 50, paddingHorizontal: 15, paddingVertical: 8, borderRadius: 12, fontSize: 24, letterSpacing: 15, textAlign: "center" }}
                                     onBlur={onBlur}
                                     onChangeText={value => onChange(value)}
                                     value={value}
@@ -72,10 +68,10 @@ export default function FillProfile() {
 
                     <View style={{ width: width, paddingHorizontal: 25 }}>
                         <TouchableOpacity
-                            style={{ backgroundColor: colors.COLORS.primary, borderRadius: 15, alignContent: "center", justifyContent: "center", padding: 12 }}
+                            style={{ backgroundColor: COLORS.primary, borderRadius: 15, alignContent: "center", justifyContent: "center", padding: 12 }}
                             onPress={handleSubmit(onSubmit)}
                         >
-                            <Text style={{ textAlign: "center", fontFamily: fonts.FONTS.medium, color: "#fff", fontSize: 17 }}>Continue</Text>
+                            <Text style={{ textAlign: "center", fontFamily: FONTS.medium, color: "#fff", fontSize: 17 }}>Continue</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
