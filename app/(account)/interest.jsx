@@ -1,32 +1,39 @@
-import { Stack } from "expo-router";
-import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { AntDesign } from '@expo/vector-icons';
-import { View } from "react-native";
-import fonts from "../../constants/fonts"
+import React, { useState } from "react";
+import { Text, View, TouchableOpacity, ScrollView, SafeAreaView, Dimensions, FlatList } from "react-native";
+import { useForm } from "react-hook-form";
+import { AntDesign, MaterialCommunityIcons, Foundation, MaterialIcons, Ionicons, FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import colors from "../../constants/colors";
-import { Dimensions } from "react-native";
-import user from "../../assets/images/kemal.jpg"
-import { Image } from "react-native";
-import { useForm, Controller } from "react-hook-form";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { KeyboardAvoidingView } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { MaterialCommunityIcons,Foundation,MaterialIcons,Ionicons } from '@expo/vector-icons';
-import { FontAwesome,FontAwesome5 } from '@expo/vector-icons';
+import fonts from "../../constants/fonts";
+import { Stack } from "expo-router";
 
-export default function FillProfile(){
+const interests = [
+    { name: 'education', icon: <MaterialCommunityIcons name="book-education" size={35}  /> },
+    { name: 'environment', icon: <FontAwesome name="envira" size={35}  /> },
+    { name: 'medical', icon: <MaterialIcons name="medical-services" size={35}  /> },
+    { name: 'infrastructure', icon: <FontAwesome name="building" size={35}  /> },
+    { name: 'orphanage', icon: <FontAwesome5 name="warehouse" size={35}  /> },
+    { name: 'humanity', icon: <Ionicons name="people" size={35}  /> },
+    { name: 'diphable', icon: <MaterialIcons name="hearing-disabled" size={35}  /> },
+    { name: 'social', icon: <Foundation name="social-skillshare" size={35}  /> },
+    { name: 'others', icon: <FontAwesome5 name="gift" size={35}  /> }
+];
 
-    const {height,width} = Dimensions.get("window")
-    const { control, handleSubmit, errors } = useForm();
+export default function FillProfile() {
+    const { height, width } = Dimensions.get("window");
+    const { handleSubmit } = useForm();
+    const [selectedInterests, setSelectedInterests] = useState([]);
+
+    const handleSelect = (interest) => {
+        setSelectedInterests(prev => prev.includes(interest) ? prev.filter(i => i !== interest) : [...prev, interest]);
+    };
+
+    const onSubmit = () => {
+        console.log("Selected Interests: ", selectedInterests);
+    };
 
     return (
-        <SafeAreaView
-            style={{backgroundColor:"#fff",height:height,flexDirection:"column",justifyContent:"space-between",alignItems:"center",paddingBottom:120,gap:15}}
-        >
-
-            <Stack.Screen
+        <SafeAreaView style={{ backgroundColor: "#fff", height: height, flexDirection: "column", justifyContent: "space-between", alignItems: "center", paddingBottom: 120, gap: 15 }}>
+               <Stack.Screen
                 options={{
                     headerLeft:()=>{
                         return (
@@ -47,123 +54,39 @@ export default function FillProfile(){
                     headerShadowVisible:false
                 }}
             />
+            <Text style={{ fontFamily: fonts.FONTS.regular, fontSize: 14, marginHorizontal: 15 ,marginVertical:20}}>Choose your interest to donate. Don't worry, you can always change it later.</Text>
+            <FlatList
+    data={interests}
+    renderItem={({ item }) => {
+        const isSelected = selectedInterests.includes(item.name);
+        const iconWithNewColor = React.cloneElement(item.icon, { color: isSelected ? '#fff' : colors.COLORS.primary });
 
-            <View
-                style={{marginHorizontal:15}}
-            >
-                <Text
-                    style={{fontFamily:fonts.FONTS.regular,fontSize:14}}
-                >
-                    Choose your interest to donate. Don't worry, you can always change it later.
+        return (
+            <TouchableOpacity onPress={() => handleSelect(item.name)}>
+                <CreateCard selected={isSelected}>
+                    {iconWithNewColor}
+                    <Text style={{ fontFamily: fonts.FONTS.medium, fontSize: 13, textAlign: "center", color: isSelected ? "#fff" : colors.COLORS.primary }}>{item.name}</Text>
+                </CreateCard>
+            </TouchableOpacity>
+        );
+    }}
+    keyExtractor={(item) => item.name}
+    numColumns={3}
+/>
 
-                </Text>
+            <View style={{ width: width, paddingHorizontal:15 }}>
+                <TouchableOpacity style={{ backgroundColor: colors.COLORS.primary, borderRadius: 10, height: 50, display: "flex", alignContent: "center", justifyContent: "center", padding: 12 }} onPress={handleSubmit(onSubmit)}>
+                    <Text style={{ textAlign: "center", fontFamily: fonts.FONTS.medium, color: "#fff", fontSize: 15 }}>Continue</Text>
+                </TouchableOpacity>
             </View>
-
-            <View
-                style={{flexDirection:"column",justifyContent:"space-around",alignItems:"center",gap:5,flex:1}}
-            >
-                {/* form */}
-                <View
-                    style={{width:width,paddingHorizontal:25,marginTop:15,flexDirection:"row",justifyContent:"space-around",alignItems:"center",gap:4}}
-                >
-                   <CreateCard>
-                        <MaterialCommunityIcons name="book-education" size={35} color={colors.COLORS.primary} />
-                        <Text style={{fontFamily:fonts.FONTS.medium,fontSize:13,textAlign:"center"}}>education</Text>
-                   </CreateCard>
-                   <CreateCard>
-                        <FontAwesome name="envira" size={35} color={colors.COLORS.primary} />
-                        <Text style={{fontFamily:fonts.FONTS.medium,fontSize:13,textAlign:"center"}}>environment</Text>
-                   </CreateCard>
-                   <CreateCard>
-                        <MaterialIcons name="medical-services" size={35} color={colors.COLORS.primary} />
-                        <Text style={{fontFamily:fonts.FONTS.medium,fontSize:13,textAlign:"center"}}>Medical</Text>
-                   </CreateCard>
-
-                </View>
-
-                <View
-                    style={{width:width,paddingHorizontal:25,marginTop:5,flexDirection:"row",justifyContent:"space-around",alignItems:"center",gap:4}}
-                >
-                   <CreateCard>
-                        <FontAwesome name="building" size={35} color={colors.COLORS.primary} />
-                        <Text style={{fontFamily:fonts.FONTS.medium,fontSize:13,textAlign:"center"}}>infrastructure</Text>
-                   </CreateCard>
-                   <CreateCard>
-                        <FontAwesome5 name="warehouse" size={35} color={colors.COLORS.primary} />
-                        <Text style={{fontFamily:fonts.FONTS.medium,fontSize:13,textAlign:"center"}}>orphanage</Text>
-                   </CreateCard>
-                   <CreateCard>
-                        <Ionicons name="people" size={35} color={colors.COLORS.primary} />
-                        <Text style={{fontFamily:fonts.FONTS.medium,fontSize:13,textAlign:"center"}}>humanity</Text>
-                   </CreateCard>
-
-                </View>
-
-                <View
-                    style={{width:width,paddingHorizontal:25,marginTop:5,flexDirection:"row",justifyContent:"space-around",alignItems:"center",gap:4}}
-                >
-                   <CreateCard>
-                        <MaterialIcons name="hearing-disabled" size={35} color={colors.COLORS.primary} />
-                        <Text style={{fontFamily:fonts.FONTS.medium,fontSize:13,textAlign:"center"}}>diphable</Text>
-                   </CreateCard>
-                   <CreateCard>
-                        <Foundation name="social-skillshare" size={35} color={colors.COLORS.primary} />
-                        <Text style={{fontFamily:fonts.FONTS.medium,fontSize:13,textAlign:"center"}}>social</Text>
-                   </CreateCard>
-                   <CreateCard>
-                        <FontAwesome5 name="gift" size={35} color={colors.COLORS.primary} />
-                        <Text style={{fontFamily:fonts.FONTS.medium,fontSize:13,textAlign:"center"}}>others</Text>
-                   </CreateCard>
-
-                </View>
-
-            
-
-
-                
-
-                {/* submit button */}
-
-                <View
-                    style={{width:width,paddingHorizontal:25}}
-                >
-                    <TouchableOpacity
-                        style={{backgroundColor:colors.COLORS.primary,borderRadius:15,alignContent:"center",justifyContent:"center",padding:12}}
-                    >
-                        <Text
-                            style={{textAlign:"center",fontFamily:fonts.FONTS.medium,color:"#fff",fontSize:15}}
-                        >Continue</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            
-
-            {/* this view is for the form and the submit button */}
-
-            
-            
-
         </SafeAreaView>
-    )
+    );
 }
 
-const CreateCard = ({children})=>{
+const CreateCard = ({ children, selected }) => {
     return (
-        <TouchableOpacity
-            style={{
-                width:100,
-                height:100,
-                borderColor:"#000",
-                borderWidth:0.5,
-                borderRadius:15
-                ,
-                justifyContent:"center",
-                alignItems:"center",
-                gap:10,
-                padding:10
-            }}
-        >
+        <View style={{ width: 100, height: 100, margin:15, borderColor: selected ? colors.COLORS.primary : "#000", backgroundColor: selected ? colors.COLORS.primary : "#fff", borderWidth: 0.5, borderRadius: 15, justifyContent: "center", alignItems: "center", gap: 10, padding: 10 }}>
             {children}
-        </TouchableOpacity>
-    )
+        </View>
+    );
 }
