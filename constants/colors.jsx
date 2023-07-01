@@ -25,4 +25,5 @@ const COLORS = {
   black: "#000",
 };
 
-export { COLORS };
+export default { COLORS };
+
