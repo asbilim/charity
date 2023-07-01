@@ -21,7 +21,7 @@ export default function Index() {
 
   return (
     <SafeAreaView
-      style={[welcomeStyles.container, { fontFamily: fonts.FONTS.regular}]}
+      style={[welcomeStyles.container, { fontFamily: FONTS.regular}]}
     >
       <View style={welcomeStyles.welcomeImage}>
         <Image

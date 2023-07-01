@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Text, View, TouchableOpacity, ScrollView, SafeAreaView, Dimensions, FlatList } from "react-native";
 import { useForm } from "react-hook-form";
 import { AntDesign, MaterialCommunityIcons, Foundation, MaterialIcons, Ionicons, FontAwesome, FontAwesome5 } from '@expo/vector-icons';
-import colors from "../../constants/colors";
-import fonts from "../../constants/fonts";
+import {COLORS} from "../../constants/colors";
+import {FONTS} from "../../constants/fonts";
 import { Stack } from "expo-router";
 
 const interests = [
@@ -35,17 +35,10 @@ export default function FillProfile() {
         <SafeAreaView style={{ backgroundColor: "#fff", height: height, flexDirection: "column", justifyContent: "space-between", alignItems: "center", paddingBottom: 120, gap: 15 }}>
                <Stack.Screen
                 options={{
-                    headerLeft:()=>{
-                        return (
-                            <View style={{marginRight:21}}>
-                                <AntDesign name="arrowleft" size={24} color={colors.COLORS.primary} />
-                            </View>
-                        )
-                    },
                     headerTitle:()=>{
                         return (
                             <Text
-                                style={{fontFamily:fonts.FONTS.bold,fontSize:20}}
+                                style={{fontFamily:FONTS.bold,fontSize:20}}
                             >
                                 Select your interest
                             </Text>
@@ -54,18 +47,18 @@ export default function FillProfile() {
                     headerShadowVisible:false
                 }}
             />
-            <Text style={{ fontFamily: fonts.FONTS.regular, fontSize: 14, marginHorizontal: 15 ,marginVertical:20}}>Choose your interest to donate. Don't worry, you can always change it later.</Text>
+            <Text style={{ fontFamily: FONTS.regular, fontSize: 14, marginHorizontal: 15 ,marginVertical:20}}>Choose your interest to donate. Don't worry, you can always change it later.</Text>
             <FlatList
     data={interests}
     renderItem={({ item }) => {
         const isSelected = selectedInterests.includes(item.name);
-        const iconWithNewColor = React.cloneElement(item.icon, { color: isSelected ? '#fff' : colors.COLORS.primary });
+        const iconWithNewColor = React.cloneElement(item.icon, { color: isSelected ? '#fff' : COLORS.primary });
 
         return (
             <TouchableOpacity onPress={() => handleSelect(item.name)}>
                 <CreateCard selected={isSelected}>
                     {iconWithNewColor}
-                    <Text style={{ fontFamily: fonts.FONTS.medium, fontSize: 13, textAlign: "center", color: isSelected ? "#fff" : colors.COLORS.primary }}>{item.name}</Text>
+                    <Text style={{ fontFamily: FONTS.medium, fontSize: 13, textAlign: "center", color: isSelected ? "#fff" : COLORS.primary }}>{item.name}</Text>
                 </CreateCard>
             </TouchableOpacity>
         );
@@ -75,8 +68,8 @@ export default function FillProfile() {
 />
 
             <View style={{ width: width, paddingHorizontal:15 }}>
-                <TouchableOpacity style={{ backgroundColor: colors.COLORS.primary, borderRadius: 10, height: 50, display: "flex", alignContent: "center", justifyContent: "center", padding: 12 }} onPress={handleSubmit(onSubmit)}>
-                    <Text style={{ textAlign: "center", fontFamily: fonts.FONTS.medium, color: "#fff", fontSize: 15 }}>Continue</Text>
+                <TouchableOpacity style={{ backgroundColor: COLORS.primary, borderRadius: 10, height: 50, display: "flex", alignContent: "center", justifyContent: "center", padding: 12 }} onPress={handleSubmit(onSubmit)}>
+                    <Text style={{ textAlign: "center", fontFamily: FONTS.medium, color: "#fff", fontSize: 15 }}>Continue</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -85,7 +78,7 @@ export default function FillProfile() {
 
 const CreateCard = ({ children, selected }) => {
     return (
-        <View style={{ width: 100, height: 100, margin:15, borderColor: selected ? colors.COLORS.primary : "#000", backgroundColor: selected ? colors.COLORS.primary : "#fff", borderWidth: 0.5, borderRadius: 15, justifyContent: "center", alignItems: "center", gap: 10, padding: 10 }}>
+        <View style={{ width: 100, height: 100, margin:15, borderColor: selected ? COLORS.primary : "#000", backgroundColor: selected ? COLORS.primary : "#fff", borderWidth: 0.5, borderRadius: 15, justifyContent: "center", alignItems: "center", gap: 10, padding: 10 }}>
             {children}
         </View>
     );
