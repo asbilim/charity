@@ -1,9 +1,7 @@
 import { Stack, useRouter } from "expo-router";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native";
-import {FONTS} from "../../constants/fonts";
-import {COLORS} from "../../constants/colors";
-import {SIZES, SPACING, BORDER_RADIUS, ELEVATION} from "../../constants/sizes";
+import {FONTS} from "../constants/fonts";
 import { welcome } from "../constants/image";
 import { welcomeStyles } from "../styles/welcome";
 import { useEffect } from "react";
@@ -13,7 +11,8 @@ export default function Index() {
 
   useEffect(() => {
     setTimeout(() => {
-      router.push("/(resetpass)/confirmation");
+      router.push("/(home)/home");
+      // router.push("/(resetpass)/confirmation");
       // router.push("/(auth)/login");
       // router.push("/(account)/pin");
     }, 1000);
