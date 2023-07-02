@@ -1,7 +1,7 @@
-import { Stack, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native";
-import {FONTS} from "../constants/fonts";
+import { FONTS } from "../constants/fonts";
 import { welcome } from "../constants/image";
 import { welcomeStyles } from "../styles/welcome";
 import { useEffect } from "react";
@@ -11,7 +11,7 @@ export default function Index() {
 
   useEffect(() => {
     setTimeout(() => {
-      router.push("/(home)/home");
+      // router.push("/(home)/search");
       // router.push("/(resetpass)/confirmation");
       // router.push("/(auth)/login");
       // router.push("/(account)/pin");
@@ -20,7 +20,7 @@ export default function Index() {
 
   return (
     <SafeAreaView
-      style={[welcomeStyles.container, { fontFamily: FONTS.regular}]}
+      style={[welcomeStyles.container, { fontFamily: FONTS.regular }]}
     >
       <View style={welcomeStyles.welcomeImage}>
         <Image
@@ -37,10 +37,20 @@ export default function Index() {
           Discover the helpless ones and bring then your support
         </Text>
         <View style={welcomeStyles.welcomeTextButtons}>
-          <TouchableOpacity style={welcomeStyles.welcomeTextButtonRegister}>
+          <TouchableOpacity
+            style={welcomeStyles.welcomeTextButtonRegister}
+            onPress={() => {
+              router.replace("(auth)/register");
+            }}
+          >
             <Text style={welcomeStyles.welcomeText3}>Register</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={welcomeStyles.welcomeTextButtonsLogin}>
+          <TouchableOpacity
+            style={welcomeStyles.welcomeTextButtonsLogin}
+            onPress={() => {
+              router.replace("(auth)/login");
+            }}
+          >
             <Text style={welcomeStyles.welcomeText3}>Login</Text>
           </TouchableOpacity>
         </View>

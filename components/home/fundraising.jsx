@@ -13,13 +13,13 @@ import { Ionicons } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("window");
 
-const Fundraising = ({ Fundraising }) => {
+const Fundraising = ({ Fundraising, bookmark }) => {
   return (
     <View
       style={[
         {
           height: height * 0.4,
-          width: width * 0.8,
+          width: bookmark? width * 0.92: width * 0.8,
           borderColor: COLORS.gray,
           borderWidth: 1,
           borderRadius: BORDER_RADIUS.medium,
@@ -49,7 +49,7 @@ const Fundraising = ({ Fundraising }) => {
         style={[
           {
             height: height * 0.26,
-            width: width * 0.8,
+            width: bookmark? width * 0.92: width * 0.8,
             borderBottomColor: COLORS.gray,
             borderBottomWidth: 0.5,
           },

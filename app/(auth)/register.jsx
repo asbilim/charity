@@ -10,30 +10,66 @@ import {
 import { loginStyles } from "../../styles/auth";
 import { welcomeStyles } from "../../styles/welcome";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import {FONTS} from "../../constants/fonts";
-import {COLORS} from "../../constants/colors";
-import {SIZES, SPACING, BORDER_RADIUS, ELEVATION} from "../../constants/sizes";
+import { FONTS } from "../../constants/fonts";
+import { COLORS } from "../../constants/colors";
+import {
+  SIZES,
+  SPACING,
+  BORDER_RADIUS,
+  ELEVATION,
+} from "../../constants/sizes";
 import { Dimensions } from "react-native";
 import { icon } from "../../constants/image";
 import { facebook, google, apple } from "../../constants/icon";
+import { Backend_url } from "../../constants/string";
 import Social from "../../components/login/social";
 import { Controller, useForm } from "react-hook-form";
+import ToastManager, { Toast } from "toastify-react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const { width, height } = Dimensions.get("window");
 
 const index = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  useEffect(() => {
+    const getElement = async () => {
+      await AsyncStorage.getItem("email").then((value) => {
+        setEmail(value);
+      });
+    };
+
+    getElement();
+  }, []);
+
+  console.log(email);
+
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
+
+    const userAlready = await axios.post(`${Backend_url}/auth/verify-email`, {
+      email: data.email,
+    });
+
+    if (userAlready.data.error) {
+      return Toast.error("Sorry this Email is already used");
+    } else {
+      await AsyncStorage.setItem("email", data.email);
+      await AsyncStorage.setItem("password", data.password);
+    }
   };
   return (
     <ScrollView>
-      <SafeAreaView style={loginStyles.container}>
+      <SafeAreaView style={[loginStyles.container]}>
+        <ToastManager width={width * 0.9} positionValue={10} />
         <Text style={welcomeStyles.welcomeText1}>Welcome to CharitEase</Text>
 
         <View style={{}}>
@@ -73,6 +109,7 @@ const index = () => {
                   onBlur={onBlur}
                   onChangeText={(value) => onChange(value)}
                   value={value}
+                  defaultValue={email ? email : ""}
                 />
               )}
               name="email"
@@ -176,7 +213,7 @@ const index = () => {
             {errors.confirmpassword && (
               <Text
                 style={{
-                  color: error,
+                  color: COLORS.error,
                   fontFamily: FONTS.bold,
                 }}
               >
@@ -194,7 +231,7 @@ const index = () => {
               alignContent: "center",
               justifyContent: "center",
               padding: 12,
-              marginTop: SPACING.medium
+              marginTop: SPACING.medium,
             }}
             onPress={handleSubmit(onSubmit)}
           >

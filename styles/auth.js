@@ -11,7 +11,7 @@ const loginStyles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    // height: height / 1.1,
+    paddingTop: SPACING.large,
     marginTop: SPACING.large,
     marginBottom: SPACING.large,
     flex: 1,

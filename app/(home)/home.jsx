@@ -17,6 +17,7 @@ import { COLORS } from "../../constants/colors";
 import Category from "../../components/home/category";
 import Fundraising from "../../components/home/fundraising";
 import Impact from "../../components/home/impact";
+import Prayers from "../../components/home/prayer";
 
 const Home = () => {
   const { height, width } = Dimensions.get("window");
@@ -379,6 +380,59 @@ const Home = () => {
             <Impact />
             <Impact />
             <Impact />
+          </View>
+        </ScrollView>
+
+         {/* Prayers from good peoples */}
+         <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingHorizontal: 10,
+            paddingVertical: 0,
+            alignItems: "center",
+            marginTop: SPACING.large,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              fontFamily: FONTS.medium,
+              fontSize: 17,
+              marginHorizontal: 10,
+              maxWidth: width * 0.8,
+            }}
+            numberOfLines={1}
+          >
+           Prayers from good peoples 
+          </Text>
+          <Text
+            style={{
+              textAlign: "center",
+              fontFamily: FONTS.medium,
+              fontSize: 17,
+              marginHorizontal: 10,
+              color: COLORS.primary,
+            }}
+          >
+            See All
+          </Text>
+        </View>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              paddingHorizontal: SPACING.medium,
+              alignItems: "center",
+              marginTop: 10,
+              gap: SPACING.large,
+            }}
+          >
+            <Prayers />
+            <Prayers />
+            <Prayers />
           </View>
         </ScrollView>
       </ScrollView>

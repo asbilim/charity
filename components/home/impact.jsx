@@ -63,7 +63,7 @@ const Impact = ({ current, text }) => {
           </Text>
           <View
             style={{
-              top: height * 0.02,
+              top: height * 0.005,
               height: width * 0.12,
               width: width * 0.12,
               borderColor: COLORS.primary,
