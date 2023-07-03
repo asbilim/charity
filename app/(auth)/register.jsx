@@ -22,21 +22,24 @@ import { Dimensions } from "react-native";
 import { icon } from "../../constants/image";
 import { facebook, google, apple } from "../../constants/icon";
 import { Backend_url } from "../../constants/string";
+import { sleep } from "../../functions/utils";
 import Social from "../../components/login/social";
 import { Controller, useForm } from "react-hook-form";
 import ToastManager, { Toast } from "toastify-react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link, useRouter } from "expo-router";
 
 const { width, height } = Dimensions.get("window");
 
 const index = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   useEffect(() => {
     const getElement = async () => {
-      await AsyncStorage.getItem("email").then((value) => {
+      await AsyncStorage.getItem("userId").then((value) => {
         setEmail(value);
       });
     };
@@ -60,10 +63,14 @@ const index = () => {
     });
 
     if (userAlready.data.error) {
+      console.log(userAlready.data);
       return Toast.error("Sorry this Email is already used");
     } else {
       await AsyncStorage.setItem("email", data.email);
       await AsyncStorage.setItem("password", data.password);
+      Toast.success("Infos saved successfully");
+      await sleep(3);
+      router.push("../(account)/fillprofile");
     }
   };
   return (
@@ -109,11 +116,16 @@ const index = () => {
                   onBlur={onBlur}
                   onChangeText={(value) => onChange(value)}
                   value={value}
-                  defaultValue={email ? email : ""}
                 />
               )}
               name="email"
-              rules={{ required: true }}
+              rules={{
+                required: "This is required.",
+                pattern: {
+                  value: /^\S+@\S+\.\S+$/i,
+                  message: "Enter a valid Email",
+                },
+              }}
               defaultValue=""
             />
             {errors.email && (
@@ -123,7 +135,7 @@ const index = () => {
                   fontFamily: FONTS.bold,
                 }}
               >
-                This is required.
+                {errors.email.message}
               </Text>
             )}
           </View>
@@ -158,7 +170,10 @@ const index = () => {
                 />
               )}
               name="password"
-              rules={{ required: true }}
+              rules={{
+                required: "This is required.",
+                minLength: { value: 8, message: "Enter at least 8 characters" },
+              }}
               defaultValue=""
             />
             {errors.password && (
@@ -168,7 +183,7 @@ const index = () => {
                   fontFamily: FONTS.bold,
                 }}
               >
-                This is required.
+                {errors.password.message}
               </Text>
             )}
           </View>
@@ -280,17 +295,19 @@ const index = () => {
           >
             Don't have and Account?
           </Text>
-          <Text
-            style={{
-              textAlign: "center",
-              fontFamily: FONTS.medium,
-              fontSize: 17,
-              marginHorizontal: 10,
-              color: COLORS.primary,
-            }}
-          >
-            Sing Up
-          </Text>
+          <TouchableOpacity onPress={()=>{router.replace("login")}}>
+            <Text
+              style={{
+                textAlign: "center",
+                fontFamily: FONTS.medium,
+                fontSize: 17,
+                marginHorizontal: 10,
+                color: COLORS.primary,
+              }}
+            >
+              Sing Up
+            </Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </ScrollView>

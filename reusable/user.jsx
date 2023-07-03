@@ -1,11 +1,8 @@
 const axios = require("axios");
 const Backend_url = process.env.NEXT_PUBLIC_BACKEND_URL;
-import Cookies from "js-cookie";
-import { decrypt } from "../functions/crypto";
 
 export const GetUsers = async () => {
   const userId_temp = Cookies.get("user-token");
-  const userId = userId_temp ? decrypt(userId_temp) : null;
   if (userId) {
     const res = await axios.get(`${Backend_url}/user/${userId}`);
     const user = await res.data;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import {
   Text,
   Dimensions,
@@ -11,15 +11,50 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { AntDesign } from "@expo/vector-icons";
-import {FONTS} from "../../constants/fonts";
-import {COLORS} from "../../constants/colors";
-import {SIZES, SPACING, BORDER_RADIUS, ELEVATION} from "../../constants/sizes";
+import { FONTS } from "../../constants/fonts";
+import { COLORS } from "../../constants/colors";
+import {
+  SIZES,
+  SPACING,
+  BORDER_RADIUS,
+  ELEVATION,
+} from "../../constants/sizes";
 import user from "../../assets/images/kemal.jpg";
+import ToastManager, { Toast } from "toastify-react-native";
+import axios from "axios";
+import { Backend_url } from "../../constants/string";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function FillProfile() {
   const { height, width } = Dimensions.get("window");
-  const [countDown, setCountDown] = useState(60)
-  const [time, setTime] = useState(60)
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [ResetInfo, setResetInfo] = useState("");
+
+  useEffect(() => {
+    const getElement = async () => {
+      await AsyncStorage.getItem("email").then(async (value) => {
+        setEmail(value);
+        await axios.get(`${Backend_url}/auth/code/${value}`).then((user) => {
+          console.log(user.data);
+          setResetInfo(user.data);
+        });
+      });
+    };
+
+    getElement();
+  }, []);
+
+  const OTPFuction = (OTP) => {
+    if (ResetInfo.expirationDate > Date.now()) {
+      Toast.warn("Your OTP has expired");
+    } else if (ResetInfo.code === OTP) {
+      router.push("/reset");
+    } else {
+      Toast.error("Invalid OTP code");
+    }
+  };
+
   const {
     control,
     handleSubmit,
@@ -28,18 +63,8 @@ export default function FillProfile() {
 
   const onSubmit = (data) => {
     console.log(data);
+    OTPFuction(data.code);
   };
-
-//   useEffect(() => {
-//     setTimeout(() => {
-//         setCountDown((prev)=> (prev - 1))
-//         if(countDown === 0){
-//             setCountDown(time + 60)
-//             setTime((prev)=>{prev + 60})
-//         }
-//     }, 1000);
-//   }, [countDown])
-  
 
   return (
     <SafeAreaView
@@ -56,15 +81,20 @@ export default function FillProfile() {
     >
       <Stack.Screen
         options={{
-          headerLeft: () => (
-            <View style={{ marginRight: 21 }}>
-              <AntDesign
-                name="arrowleft"
-                size={24}
-                color={COLORS.primary}
-              />
-            </View>
-          ),
+          headerLeft: () => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  router.back();
+                }}
+                style={{
+                  marginRight: 21,
+                }}
+              >
+                <AntDesign name="arrowleft" size={24} color={COLORS.primary} />
+              </TouchableOpacity>
+            );
+          },
           headerTitle: () => (
             <Text style={{ fontFamily: FONTS.bold, fontSize: 20 }}>
               confirmation code
@@ -75,6 +105,8 @@ export default function FillProfile() {
         }}
       />
 
+      <ToastManager width={width * 0.9} positionValue={10} />
+
       <KeyboardAwareScrollView style={{ height: height }}>
         <View style={{ paddingVertical: 20 }}>
           <Text
@@ -84,7 +116,7 @@ export default function FillProfile() {
               fontFamily: FONTS.regular,
             }}
           >
-            A code have been seed to your email {"jonhdoe@gmail.com"}
+            A code have been seed to your email {email}
           </Text>
         </View>
 
@@ -137,18 +169,18 @@ export default function FillProfile() {
                   onBlur={onBlur}
                   onChangeText={(value) => onChange(value)}
                   value={value}
-                  placeholder="****"
+                  placeholder="******"
                   keyboardType="numeric"
-                  maxLength={4}
+                  maxLength={6}
                 />
               )}
               name="code"
-              rules={{ minLength: 4 }}
+              rules={{ required: true, minLength: 6 }}
               defaultValue=""
             />
             {errors.code && (
               <Text style={{ color: "red" }}>
-                Please enter a valid 4-digit code.
+                Please enter a valid 6-digit code.
               </Text>
             )}
           </View>
@@ -163,17 +195,31 @@ export default function FillProfile() {
             >
               Resent code in
             </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                fontFamily: FONTS.medium,
-                fontSize: 17,
-                marginHorizontal: 10,
-                color: COLORS.primary,
+            <TouchableOpacity
+              onPress={async () => {
+                await axios
+                  .post(`${Backend_url}/auth/forgot-password-email`, {
+                    email: email,
+                  })
+                  .then((user) => {
+                    setResetInfo(user.data),
+                      Toast.success("Your code have Been resend!");
+                  });
               }}
             >
-              {countDown}
-            </Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontFamily: FONTS.medium,
+                  fontSize: 17,
+                  marginHorizontal: 10,
+                  marginTop: 10,
+                  color: COLORS.primary,
+                }}
+              >
+                Resend
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </KeyboardAwareScrollView>

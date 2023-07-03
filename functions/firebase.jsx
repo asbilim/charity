@@ -2,13 +2,11 @@ import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAkmi63BNembbqJaxOz2Zym3A4GxbhdkyI",
-  authDomain: "crown-ff1d9.firebaseapp.com",
-  projectId: "crown-ff1d9",
-  storageBucket: "crown-ff1d9.appspot.com",
-  messagingSenderId: "487858178684",
-  appId: "1:487858178684:web:5285f92330d82b4e1a57f9",
-  measurementId: "G-6HCXWQLV62"
+  apiKey: "AIzaSyCqMSIdsSCwlDcWVb-5KRRFd2ycqdbi73I",
+  authDomain: "charitease-a38ab.firebaseapp.com",
+  projectId: "charitease-a38ab",
+  storageBucket: "charitease-a38ab.appspot.com",
+  appId: "1:562504011497:android:e9c6482ceb3bd7d898ea78",
 };
 
 // Initialize Firebase

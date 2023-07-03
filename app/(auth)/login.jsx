@@ -10,37 +10,63 @@ import {
 import { loginStyles } from "../../styles/auth";
 import { welcomeStyles } from "../../styles/welcome";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import {FONTS} from "../../constants/fonts";
-import {COLORS} from "../../constants/colors";
-import {SIZES, SPACING, BORDER_RADIUS, ELEVATION} from "../../constants/sizes";
+import { FONTS } from "../../constants/fonts";
+import { COLORS } from "../../constants/colors";
+import {
+  SIZES,
+  SPACING,
+  BORDER_RADIUS,
+  ELEVATION,
+} from "../../constants/sizes";
 import { Dimensions } from "react-native";
 import { icon } from "../../constants/image";
 import { facebook, google, apple } from "../../constants/icon";
 import Social from "../../components/login/social";
 import { Controller, useForm } from "react-hook-form";
-import { Stack } from "expo-router";
+import { Link, Stack, useRouter } from "expo-router";
+import { Backend_url } from "../../constants/string";
+import ToastManager, { Toast } from "toastify-react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { sleep } from "../../functions/utils";
 
 const { width, height } = Dimensions.get("window");
 
 const index = () => {
+  const router = useRouter();
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
+    const user = await axios.post(`${Backend_url}/auth/login`, {
+      email: data.email,
+      password: data.password,
+    });
+    if (user.data.message) {
+      return Toast.error("Invalid credentials");
+    } else {
+      await AsyncStorage.setItem("isLogin", JSON.stringify(true));
+      await AsyncStorage.setItem("userId", user.data._id);
+      Toast.success("Login successful");
+      await sleep(3);
+      router.replace("../(home)/home");
+    }
   };
   return (
     <ScrollView>
       <SafeAreaView style={loginStyles.container}>
-      <Stack 
-            screenOptions={{
-                headerShown: false,
-                statusBarHidden: false
-            }} 
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            statusBarHidden: false,
+          }}
         />
+        <ToastManager width={width * 0.9} positionValue={10} />
+
         <Text style={welcomeStyles.welcomeText1}>Happy Seeing you Again</Text>
 
         <View style={{}}>
@@ -83,7 +109,13 @@ const index = () => {
                 />
               )}
               name="email"
-              rules={{ required: true }}
+              rules={{
+                required: "This is required.",
+                pattern: {
+                  value: /^\S+@\S+\.\S+$/i,
+                  message: "Enter a valid Email",
+                },
+              }}
               defaultValue=""
             />
             {errors.email && (
@@ -93,13 +125,19 @@ const index = () => {
                   fontFamily: FONTS.bold,
                 }}
               >
-                This is required.
+                {errors.email.message}
               </Text>
             )}
           </View>
 
-           {/* password */}
-           <View style={{ flexDirection: "column", gap: 6, marginTop: SPACING.medium }}>
+          {/* password */}
+          <View
+            style={{
+              flexDirection: "column",
+              gap: 6,
+              marginTop: SPACING.medium,
+            }}
+          >
             <Text style={{ fontSize: 14, fontFamily: FONTS.regular }}>
               password
             </Text>
@@ -118,7 +156,7 @@ const index = () => {
                   onBlur={onBlur}
                   onChangeText={(value) => onChange(value)}
                   value={value}
-                  secureTextEntry= {true}
+                  secureTextEntry={true}
                 />
               )}
               name="password"
@@ -138,19 +176,24 @@ const index = () => {
           </View>
         </KeyboardAwareScrollView>
 
-        <Text
-          style={[
-            welcomeStyles.welcomeText2,
-            {
-              fontSize: SIZES.medium,
-              marginTop: SPACING.medium,
-              color: COLORS.secondary,
-            },
-          ]}
+        <TouchableOpacity
+          onPress={() => {
+            router.push("../(resetpass)/forgotpassword");
+          }}
         >
-          Forgot password
-        </Text>
-
+          <Text
+            style={[
+              welcomeStyles.welcomeText2,
+              {
+                fontSize: SIZES.medium,
+                marginTop: SPACING.medium,
+                color: COLORS.secondary,
+              },
+            ]}
+          >
+            Forgot password
+          </Text>
+        </TouchableOpacity>
         <View style={{ width: width, paddingHorizontal: 25 }}>
           <TouchableOpacity
             style={{
@@ -207,17 +250,23 @@ const index = () => {
           >
             Don't have and Account?
           </Text>
-          <Text
-            style={{
-              textAlign: "center",
-              fontFamily: FONTS.medium,
-              fontSize: 17,
-              marginHorizontal: 10,
-              color: COLORS.primary,
+          <TouchableOpacity
+            onPress={() => {
+              router.replace("register");
             }}
           >
-            Sing Up
-          </Text>
+            <Text
+              style={{
+                textAlign: "center",
+                fontFamily: FONTS.medium,
+                fontSize: 17,
+                marginHorizontal: 10,
+                color: COLORS.primary,
+              }}
+            >
+              Sing Up
+            </Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </ScrollView>

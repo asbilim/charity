@@ -5,18 +5,10 @@ import { FONTS } from "../constants/fonts";
 import { welcome } from "../constants/image";
 import { welcomeStyles } from "../styles/welcome";
 import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Index() {
   const router = useRouter();
-
-  useEffect(() => {
-    setTimeout(() => {
-      // router.push("/(home)/search");
-      // router.push("/(resetpass)/confirmation");
-      // router.push("/(auth)/login");
-      // router.push("/(account)/pin");
-    }, 1000);
-  }, []);
 
   return (
     <SafeAreaView

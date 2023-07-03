@@ -12,12 +12,22 @@ import { welcomeStyles } from "../../styles/welcome";
 import { forgotpass } from "../../constants/image";
 import { Controller, useForm } from "react-hook-form";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import {FONTS} from "../../constants/fonts";
-import {COLORS} from "../../constants/colors";
-import {SIZES, SPACING, BORDER_RADIUS, ELEVATION} from "../../constants/sizes";
+import { FONTS } from "../../constants/fonts";
+import { COLORS } from "../../constants/colors";
+import {
+  SIZES,
+  SPACING,
+  BORDER_RADIUS,
+  ELEVATION,
+} from "../../constants/sizes";
 import { ScrollView } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 import { Stack, useRouter } from "expo-router";
+import axios from "axios";
+import ToastManager, { Toast } from "toastify-react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { sleep } from "../../functions/utils";
+import { Backend_url } from "../../constants/string";
 
 const ForgotPassword = () => {
   const { height, width } = Dimensions.get("window");
@@ -30,8 +40,25 @@ const ForgotPassword = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
+    const userAlready = await axios.post(`${Backend_url}/auth/verify-email`, {
+      email: data.email,
+    });
+    if (userAlready.data.message === "no-user") {
+      return Toast.error("Sorry this email don't exist");
+    } else {
+      await axios
+        .post(`${Backend_url}/auth/forgot-password-email`, {
+          email: data.email,
+        })
+        .then(async (user) => {
+          await AsyncStorage.setItem("email", user.data.email);
+          Toast.success("CODE send successfully");
+          await sleep(3);
+          router.push("confirmation");
+        });
+    }
   };
 
   return (
@@ -43,7 +70,14 @@ const ForgotPassword = () => {
           options={{
             headerLeft: () => {
               return (
-                <TouchableOpacity style={{ marginRight: 21 }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    router.back();
+                  }}
+                  style={{
+                    marginRight: 21,
+                  }}
+                >
                   <AntDesign
                     name="arrowleft"
                     size={24}
@@ -60,9 +94,11 @@ const ForgotPassword = () => {
               );
             },
             headerShadowVisible: false,
-            headerBackVisible: false
+            headerBackVisible: false,
           }}
         />
+        <ToastManager width={width * 0.9} positionValue={10} />
+
         <View
           style={[
             welcomeStyles.welcomeImage,
