@@ -26,6 +26,10 @@ const COLORS = {
   //black color.
 
   black: "#000",
+
+   //black white.
+
+   white: "#fff",
 };
 
 export { COLORS };

@@ -53,7 +53,7 @@ const index = () => {
       await AsyncStorage.setItem("userId", user.data._id);
       Toast.success("Login successful");
       await sleep(3);
-      router.replace("../(home)/home");
+      router.replace("../(tabs)/");
     }
   };
   return (

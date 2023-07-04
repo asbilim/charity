@@ -19,7 +19,8 @@ const Category = ({ current, text }) => {
         display: "flex",
         alignContent: "center",
         justifyContent: "center",
-        padding: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 15,
       }}
     >
       <TouchableOpacity

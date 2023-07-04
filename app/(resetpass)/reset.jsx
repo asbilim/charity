@@ -58,7 +58,7 @@ const ForgotPassword = () => {
         await AsyncStorage.removeItem("email");
         Toast.success("Password reset successful");
         await sleep(3);
-        router.replace("../(home)/home");
+        router.replace("../(tabs)/");
       })
       .catch((err) => {
         console.log(err)

@@ -1,6 +1,6 @@
-import { View, Text, SafeAreaView, Dimensions, ScrollView } from "react-native";
+import { View, Text, SafeAreaView, Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { COLORS } from "../../constants/colors";
 import { BORDER_RADIUS, SPACING } from "../../constants/sizes";
@@ -11,16 +11,26 @@ import Fundraising from "../../components/home/fundraising";
 
 const Notifications = () => {
   const { height, width } = Dimensions.get("window");
+  const router = useRouter()
 
   return (
     <SafeAreaView style={{ backgroundColor: "#fff" , height: height}}>
       <Stack.Screen
         options={{
-          headerLeft: () => (
-            <View style={{ marginRight: 21 }}>
-              <AntDesign name="arrowleft" size={24} color={COLORS.primary} />
-            </View>
-          ),
+          headerLeft: () => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  router.back();
+                }}
+                style={{
+                  marginRight: 21,
+                }}
+              >
+                <AntDesign name="arrowleft" size={24} color={COLORS.primary} />
+              </TouchableOpacity>
+            );
+          },
           headerTitle: () => (
             <Text style={{ fontFamily: FONTS.bold, fontSize: 20 }}>
               bookmark
@@ -62,7 +72,7 @@ const Notifications = () => {
               paddingHorizontal: 10,
               alignItems: "center",
               marginTop: 10,
-              height: height * 0.1
+              height: height * 0.12
             }}
           >
             <Category current={true} text={"All"} />

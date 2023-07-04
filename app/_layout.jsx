@@ -14,7 +14,8 @@ export default function Layout() {
     const isConnected = await AsyncStorage.getItem("isLogin");
     console.log(isConnected);
     if (isConnected == "true") {
-      router.replace("(home)/home");
+      router.replace("../(tabs)/");
+      // router.replace("(home)/home");
     }
   };
 

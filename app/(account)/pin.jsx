@@ -103,7 +103,7 @@ export default function FillProfile() {
           await AsyncStorage.setItem("userId", res.data._id);
           Toast.success("Account successfully");
           await sleep(3);
-          router.replace("../(home)/home");
+          router.replace("../(tabs)/");
         }
       })
       .catch((err) => {

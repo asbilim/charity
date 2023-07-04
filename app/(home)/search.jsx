@@ -5,9 +5,10 @@ import {
   Dimensions,
   ScrollView,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { COLORS } from "../../constants/colors";
 import { BORDER_RADIUS, SPACING } from "../../constants/sizes";
@@ -15,20 +16,32 @@ import { FONTS } from "../../constants/fonts";
 import Notification from "../../components/home/notification";
 import Category from "../../components/home/category";
 import Fundraising from "../../components/home/fundraising";
+import FundraisingSm from "../../components/home/fundraisingsm";
 
 const Notifications = () => {
   const { height, width } = Dimensions.get("window");
   const [search, setSearch] = useState("");
+  const router = useRouter()
+
 
   return (
     <SafeAreaView style={{ backgroundColor: "#fff", height: height }}>
       <Stack.Screen
         options={{
-          headerLeft: () => (
-            <View style={{ marginRight: 21 }}>
-              <AntDesign name="arrowleft" size={24} color={COLORS.primary} />
-            </View>
-          ),
+          headerLeft: () => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  router.back();
+                }}
+                style={{
+                  marginRight: 21,
+                }}
+              >
+                <AntDesign name="arrowleft" size={24} color={COLORS.primary} />
+              </TouchableOpacity>
+            );
+          },
           headerTitle: () => (
             <Text style={{ fontFamily: FONTS.bold, fontSize: 20 }}>Search</Text>
           ),
@@ -85,7 +98,7 @@ const Notifications = () => {
             flexDirection: "row",
             paddingHorizontal: 10,
             alignItems: "center",
-            height: height * 0.1,
+            height: height * 0.12,
           }}
         >
           <Category current={true} text={"All"} />
@@ -112,9 +125,11 @@ const Notifications = () => {
             gap: 15,
           }}
         >
-          <Fundraising bookmark={true} />
-          <Fundraising bookmark={true} />
-          <Fundraising bookmark={true} />
+          <FundraisingSm/>
+          <FundraisingSm/>
+          <FundraisingSm/>
+          <FundraisingSm/>
+          <FundraisingSm/>
         </View>
       </ScrollView>
     </SafeAreaView>
