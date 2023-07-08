@@ -4,11 +4,30 @@ import { SafeAreaView } from "react-native";
 import { FONTS } from "../constants/fonts";
 import { welcome } from "../constants/image";
 import { welcomeStyles } from "../styles/welcome";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Index() {
+  const [connected, setConnected] = useState((connected) => false);
+
   const router = useRouter();
+
+  const handleConnected = async () => {
+    const isConnected = await AsyncStorage.getItem("isLogin");
+    if (isConnected == "true") {
+      router.push("/(tabs)/");
+    }
+  };
+
+  useEffect(() => {
+    const run = async () => {
+      const isConnected = await AsyncStorage.getItem("isLogin");
+      setConnected((connected) => isConnected);
+      handleConnected();
+    };
+
+    run();
+  }, []);
 
   return (
     <SafeAreaView

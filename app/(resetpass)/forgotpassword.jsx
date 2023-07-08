@@ -44,7 +44,7 @@ const ForgotPassword = () => {
     console.log(data);
     const userAlready = await axios.post(`${Backend_url}/auth/verify-email`, {
       email: data.email,
-    });
+    })
     if (userAlready.data.message === "no-user") {
       return Toast.error("Sorry this email don't exist");
     } else {

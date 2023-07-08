@@ -33,6 +33,9 @@ import {
       >
         <TouchableOpacity
         style={{position:"absolute", bottom: 30, right: 10, zIndex:5}}
+        onPress={()=>{
+          router.push("../(donation)/box")
+        }}
         >
           <View
             style={{

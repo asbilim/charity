@@ -6,6 +6,12 @@
     },
     "name": "charitEase",
     "slug": "charitEase",
+    "icon": "./assets/splash.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#fff"
+    },
     "plugins": [
       [
         "expo-image-picker",

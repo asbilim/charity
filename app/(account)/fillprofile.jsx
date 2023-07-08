@@ -11,7 +11,7 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import { FONTS } from "../../constants/fonts";
 import { COLORS } from "../../constants/colors";
-import user from "../../assets/images/kemal.jpg";
+import user from "../../assets/images/user.png";
 import { Controller, useForm } from "react-hook-form";
 import { TextInput } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -28,7 +28,7 @@ export default function FillProfile() {
   const { height, width } = Dimensions.get("window");
   const [country, setCountry] = useState("Cameroon");
   const [location, setLocation] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("male");
 
   const [image, setImage] = useState(null);
 
@@ -123,7 +123,13 @@ export default function FillProfile() {
         >
           <Image
             source={image ? { uri: image } : user}
-            style={{ width: 150, height: 150, borderRadius: 75 }}
+            style={{
+              width: 150,
+              height: 150,
+              borderRadius: 75,
+              borderWidth: 1,
+              borderColor: COLORS.primary,
+            }}
           />
         </TouchableOpacity>
         <KeyboardAwareScrollView>

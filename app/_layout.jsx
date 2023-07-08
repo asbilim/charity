@@ -8,14 +8,15 @@ SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
   const router = useRouter();
+  const [loaded, setLoaded] = useState(false);
 
   const handleConnected = async () => {
     // await AsyncStorage.removeItem("isLogin");
     const isConnected = await AsyncStorage.getItem("isLogin");
     console.log(isConnected);
+    setLoaded(true);
     if (isConnected == "true") {
       router.replace("../(tabs)/");
-      // router.replace("(home)/home");
     }
   };
 
@@ -40,9 +41,11 @@ export default function Layout() {
     return null;
   }
 
-  SplashScreen.hideAsync()
-    .then(() => console.log("Splash screen hidden"))
-    .catch(console.warn);
+  if (loaded) {
+    SplashScreen.hideAsync()
+      .then(() => console.log("Splash screen hidden"))
+      .catch(console.warn);
+  }
 
   return (
     <Stack
