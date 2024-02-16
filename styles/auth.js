@@ -1,8 +1,7 @@
-import { SIZES, SPACING, ELEVATION, BORDER_RADIUS } from "../constants/sizes";
-import { FONTS } from "../constants/fonts";
+import {COLORS} from "../constants/colors";
+import {SIZES, SPACING, BORDER_RADIUS, ELEVATION} from "../constants/sizes";
 import { StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
-import { COLORS } from "../constants/colors";
 
 const { width, height } = Dimensions.get("window");
 
@@ -12,7 +11,7 @@ const loginStyles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    // height: height / 1.1,
+    paddingTop: SPACING.large,
     marginTop: SPACING.large,
     marginBottom: SPACING.large,
     flex: 1,

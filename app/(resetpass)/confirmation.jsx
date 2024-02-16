@@ -13,64 +13,47 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { AntDesign } from "@expo/vector-icons";
 import { FONTS } from "../../constants/fonts";
 import { COLORS } from "../../constants/colors";
+import {
+  SIZES,
+  SPACING,
+  BORDER_RADIUS,
+  ELEVATION,
+} from "../../constants/sizes";
 import user from "../../assets/images/kemal.jpg";
+import ToastManager, { Toast } from "toastify-react-native";
 import axios from "axios";
 import { Backend_url } from "../../constants/string";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { encrypt } from "../../functions/crypto";
-import ToastManager, { Toast } from "toastify-react-native";
-import { sleep } from "../../functions/utils";
 
 export default function FillProfile() {
   const { height, width } = Dimensions.get("window");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [gender, setGender] = useState("");
-  const [location, setLocation] = useState("");
-  const [interest, setInterest] = useState("");
-  const [country, setCountry] = useState("");
-
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [ResetInfo, setResetInfo] = useState("");
 
   useEffect(() => {
     const getElement = async () => {
-      AsyncStorage.getItem("email").then((value) => {
-        if (value !== null) setEmail(value);
-      });
-
-      AsyncStorage.getItem("password").then((value) => {
-        if (value !== null) setPassword(value);
-      });
-
-      AsyncStorage.getItem("name").then((value) => {
-        if (value !== null) setFullName(value);
-      });
-
-      AsyncStorage.getItem("number").then((value) => {
-        if (value !== null) setPhone(value);
-      });
-
-      AsyncStorage.getItem("gender").then((value) => {
-        if (value !== null) setGender(value);
-      });
-
-      AsyncStorage.getItem("location").then((value) => {
-        if (value !== null) setLocation(value);
-      });
-
-      AsyncStorage.getItem("interest").then((value) => {
-        if (value !== null) setInterest(JSON.parse(value));
-      });
-
-      AsyncStorage.getItem("country").then((value) => {
-        if (value !== null) setCountry(value);
+      await AsyncStorage.getItem("email").then(async (value) => {
+        setEmail(value);
+        await axios.get(`${Backend_url}/auth/code/${value}`).then((user) => {
+          console.log(user.data);
+          setResetInfo(user.data);
+        });
       });
     };
 
     getElement();
   }, []);
+
+  const OTPFuction = (OTP) => {
+    if (ResetInfo.expirationDate > Date.now()) {
+      Toast.warn("Your OTP has expired");
+    } else if (ResetInfo.code === OTP) {
+      router.push("/reset");
+    } else {
+      Toast.error("Invalid OTP code");
+    }
+  };
 
   const {
     control,
@@ -78,38 +61,9 @@ export default function FillProfile() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     console.log(data);
-    const res = await axios
-      .post(`${Backend_url}/auth/user`, {
-        email: email,
-        password: password,
-        name: fullName,
-        contact: phone,
-        gender: gender,
-        city: location,
-        interest: interest,
-        country: country,
-        pin: parseInt(data.pin),
-        gender: gender,
-        facebook: false,
-        gmail: false,
-        gmail_password: true,
-        apple: false,
-      })
-      .then(async (res) => {
-        if (res.data) {
-          await AsyncStorage.setItem("isLogin", JSON.stringify(true));
-          await AsyncStorage.setItem("userId", res.data._id);
-          Toast.success("Account successfully");
-          await sleep(3);
-          router.replace("../(tabs)/");
-        }
-      })
-      .catch((err) => {
-        Toast.error("An Error Occur please try later");
-        console.log(err);
-      });
+    OTPFuction(data.code);
   };
 
   return (
@@ -121,6 +75,7 @@ export default function FillProfile() {
         justifyContent: "space-between",
         alignItems: "center",
         paddingBottom: 120,
+        paddingTop: height * 0.15,
         gap: 15,
       }}
     >
@@ -142,7 +97,7 @@ export default function FillProfile() {
           },
           headerTitle: () => (
             <Text style={{ fontFamily: FONTS.bold, fontSize: 20 }}>
-              Fill your profile
+              confirmation code
             </Text>
           ),
           headerShadowVisible: false,
@@ -152,7 +107,7 @@ export default function FillProfile() {
 
       <ToastManager width={width * 0.9} positionValue={10} />
 
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView style={{ height: height }}>
         <View style={{ paddingVertical: 20 }}>
           <Text
             style={{
@@ -161,8 +116,7 @@ export default function FillProfile() {
               fontFamily: FONTS.regular,
             }}
           >
-            Please remember this PIN because it will be used when you want to
-            top up,withdraw, or donate
+            A code have been seed to your email {email}
           </Text>
         </View>
 
@@ -174,7 +128,7 @@ export default function FillProfile() {
               textAlign: "center",
             }}
           >
-            Create Pin!
+            Enter code
           </Text>
         </View>
 
@@ -217,46 +171,81 @@ export default function FillProfile() {
                   value={value}
                   placeholder="******"
                   keyboardType="numeric"
-                  secureTextEntry
                   maxLength={6}
                 />
               )}
-              name="pin"
-              rules={{ required: true, minLength: 6, pattern: /^[0-9]{6}$/ }}
+              name="code"
+              rules={{ required: true, minLength: 6 }}
               defaultValue=""
             />
-            {errors.pin && (
+            {errors.code && (
               <Text style={{ color: "red" }}>
-                Please enter a valid 6-digit pin.
+                Please enter a valid 6-digit code.
               </Text>
             )}
           </View>
-
-          <View style={{ width: width, paddingHorizontal: 25 }}>
-            <TouchableOpacity
+          <View style={{ paddingVertical: 20 }}>
+            <Text
               style={{
-                backgroundColor: COLORS.primary,
-                borderRadius: 15,
-                alignContent: "center",
-                justifyContent: "center",
-                padding: 12,
+                textAlign: "center",
+                fontFamily: FONTS.medium,
+                fontSize: 17,
+                marginHorizontal: 10,
               }}
-              onPress={handleSubmit(onSubmit)}
+            >
+              Resent code in
+            </Text>
+            <TouchableOpacity
+              onPress={async () => {
+                await axios
+                  .post(`${Backend_url}/auth/forgot-password-email`, {
+                    email: email,
+                  })
+                  .then((user) => {
+                    setResetInfo(user.data),
+                      Toast.success("Your code have Been resend!");
+                  });
+              }}
             >
               <Text
                 style={{
                   textAlign: "center",
                   fontFamily: FONTS.medium,
-                  color: "#fff",
                   fontSize: 17,
+                  marginHorizontal: 10,
+                  marginTop: 10,
+                  color: COLORS.primary,
                 }}
               >
-                Continue
+                Resend
               </Text>
             </TouchableOpacity>
           </View>
         </View>
       </KeyboardAwareScrollView>
+      <View style={{ width: width, paddingHorizontal: 25 }}>
+        <TouchableOpacity
+          style={{
+            backgroundColor: COLORS.primary,
+            borderRadius: 15,
+            alignContent: "center",
+            justifyContent: "center",
+            padding: 12,
+          }}
+          onPress={handleSubmit(onSubmit)}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              fontFamily: FONTS.medium,
+              color: "#fff",
+              fontSize: 17,
+            }}
+          >
+            Continue
+          </Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }

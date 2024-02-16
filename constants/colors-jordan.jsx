@@ -14,9 +14,6 @@ const COLORS = {
   //secondary color.
   secondary: "#A959C6",
 
-  //box bg color.
-  boxbg: "#DAB8E6",
-
   //color for texts.
   textColor: "#394452",
 
@@ -26,10 +23,7 @@ const COLORS = {
   //black color.
 
   black: "#000",
-
-   //black white.
-
-   white: "#fff",
 };
 
 export { COLORS };
+

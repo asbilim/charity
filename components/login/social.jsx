@@ -1,13 +1,8 @@
 import { View, Text, Image } from "react-native";
-import { FONTS } from "../../constants/fonts";
-import { COLORS } from "../../constants/colors";
 import { Dimensions } from "react-native";
-import {
-  SIZES,
-  SPACING,
-  ELEVATION,
-  BORDER_RADIUS,
-} from "../../constants/sizes";
+import {FONTS} from "../../constants/fonts";
+import {COLORS} from "../../constants/colors";
+import {SIZES, SPACING, BORDER_RADIUS, ELEVATION} from "../../constants/sizes";
 
 const { width, height } = Dimensions.get("window");
 

@@ -1,6 +1,6 @@
-import { COLORS } from "../constants/colors";
-import { SIZES, SPACING, ELEVATION, BORDER_RADIUS } from "../constants/sizes";
-import { FONTS } from "../constants/fonts";
+import {FONTS} from "../constants/fonts";
+import {COLORS} from "../constants/colors";
+import {SIZES, SPACING, BORDER_RADIUS, ELEVATION} from "../constants/sizes";
 import { StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
 

@@ -21,19 +21,34 @@ import {
 import { Dimensions } from "react-native";
 import { icon } from "../../constants/image";
 import { facebook, google, apple } from "../../constants/icon";
+import { Backend_url } from "../../constants/string";
+import { sleep } from "../../functions/utils";
 import Social from "../../components/login/social";
 import { Controller, useForm } from "react-hook-form";
-import { Link, Stack, useRouter } from "expo-router";
-import { Backend_url } from "../../constants/string";
 import ToastManager, { Toast } from "toastify-react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { sleep } from "../../functions/utils";
+import { useEffect, useState } from "react";
+import { Link, useRouter } from "expo-router";
 
 const { width, height } = Dimensions.get("window");
 
 const index = () => {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  useEffect(() => {
+    const getElement = async () => {
+      await AsyncStorage.getItem("userId").then((value) => {
+        setEmail(value);
+      });
+    };
+
+    getElement();
+  }, []);
+
+  console.log(email);
+
   const {
     control,
     handleSubmit,
@@ -42,32 +57,27 @@ const index = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
-    const user = await axios.post(`${Backend_url}/auth/login`, {
+
+    const userAlready = await axios.post(`${Backend_url}/auth/verify-email`, {
       email: data.email,
-      password: data.password,
     });
-    if (user.data.message) {
-      return Toast.error("Invalid credentials");
+
+    if (userAlready.data.error) {
+      console.log(userAlready.data);
+      return Toast.error("Sorry this Email is already used");
     } else {
-      await AsyncStorage.setItem("isLogin", JSON.stringify(true));
-      await AsyncStorage.setItem("userId", user.data._id);
-      Toast.success("Login successful");
+      await AsyncStorage.setItem("email", data.email);
+      await AsyncStorage.setItem("password", data.password);
+      Toast.success("Infos saved successfully");
       await sleep(3);
-      router.replace("../(tabs)/");
+      router.push("../(account)/fillprofile");
     }
   };
   return (
     <ScrollView>
-      <SafeAreaView style={loginStyles.container}>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            statusBarHidden: false,
-          }}
-        />
+      <SafeAreaView style={[loginStyles.container]}>
         <ToastManager width={width * 0.9} positionValue={10} />
-
-        <Text style={welcomeStyles.welcomeText1}>Happy Seeing you Again</Text>
+        <Text style={welcomeStyles.welcomeText1}>Welcome to CharitEase</Text>
 
         <View style={{}}>
           <Image
@@ -79,15 +89,15 @@ const index = () => {
         <Text
           style={[
             welcomeStyles.welcomeText2,
-            { fontSize: SIZES.large, marginTop: SPACING.medium },
+            { fontSize: SIZES.large, marginTop: SPACING.small },
           ]}
         >
-          Free Login
+          Create Account
         </Text>
 
         <KeyboardAwareScrollView>
           {/* email */}
-          <View style={{ flexDirection: "column", gap: 6 }}>
+          <View style={{ flexDirection: "column", gap: 4 }}>
             <Text style={{ fontSize: 14, fontFamily: FONTS.regular }}>
               Email
             </Text>
@@ -135,7 +145,7 @@ const index = () => {
             style={{
               flexDirection: "column",
               gap: 6,
-              marginTop: SPACING.medium,
+              marginTop: SPACING.small,
             }}
           >
             <Text style={{ fontSize: 14, fontFamily: FONTS.regular }}>
@@ -160,7 +170,10 @@ const index = () => {
                 />
               )}
               name="password"
-              rules={{ required: true }}
+              rules={{
+                required: "This is required.",
+                minLength: { value: 8, message: "Enter at least 8 characters" },
+              }}
               defaultValue=""
             />
             {errors.password && (
@@ -170,30 +183,61 @@ const index = () => {
                   fontFamily: FONTS.bold,
                 }}
               >
-                This is required.
+                {errors.password.message}
+              </Text>
+            )}
+          </View>
+
+          {/* password */}
+          <View
+            style={{
+              flexDirection: "column",
+              gap: 6,
+              marginTop: SPACING.small,
+            }}
+          >
+            <Text style={{ fontSize: 14, fontFamily: FONTS.regular }}>
+              Confirm password
+            </Text>
+            <Controller
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={{
+                    borderWidth: 3,
+                    borderColor: COLORS.primary,
+                    width: width - 50,
+                    paddingHorizontal: 15,
+                    paddingVertical: 5,
+                    borderRadius: 12,
+                  }}
+                  onBlur={onBlur}
+                  onChangeText={(value) => onChange(value)}
+                  value={value}
+                  secureTextEntry={true}
+                />
+              )}
+              name="confirmpassword"
+              rules={{
+                // required: "Please confirm your password",
+                validate: (value, { password }) =>
+                  value === password || "Passwords do not match",
+              }}
+              defaultValue=""
+            />
+            {errors.confirmpassword && (
+              <Text
+                style={{
+                  color: COLORS.error,
+                  fontFamily: FONTS.bold,
+                }}
+              >
+                Passwords don't match!
               </Text>
             )}
           </View>
         </KeyboardAwareScrollView>
 
-        <TouchableOpacity
-          onPress={() => {
-            router.push("../(resetpass)/forgotpassword");
-          }}
-        >
-          <Text
-            style={[
-              welcomeStyles.welcomeText2,
-              {
-                fontSize: SIZES.medium,
-                marginTop: SPACING.medium,
-                color: COLORS.secondary,
-              },
-            ]}
-          >
-            Forgot password
-          </Text>
-        </TouchableOpacity>
         <View style={{ width: width, paddingHorizontal: 25 }}>
           <TouchableOpacity
             style={{
@@ -202,6 +246,7 @@ const index = () => {
               alignContent: "center",
               justifyContent: "center",
               padding: 12,
+              marginTop: SPACING.medium,
             }}
             onPress={handleSubmit(onSubmit)}
           >
@@ -213,7 +258,7 @@ const index = () => {
                 fontSize: 17,
               }}
             >
-              Login
+              Register
             </Text>
           </TouchableOpacity>
         </View>
@@ -250,11 +295,7 @@ const index = () => {
           >
             Don't have and Account?
           </Text>
-          <TouchableOpacity
-            onPress={() => {
-              router.replace("register");
-            }}
-          >
+          <TouchableOpacity onPress={()=>{router.replace("login")}}>
             <Text
               style={{
                 textAlign: "center",
